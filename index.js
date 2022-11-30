@@ -17,7 +17,7 @@ checkButton.addEventListener("click",function validBillamount(){
 
         }
         else{
-            showMessage("no chang to be return");
+            showMessage("Wanna wash some dish?");
 
         }
 
@@ -31,9 +31,9 @@ function hideMessage(){
 
 }
 function calculateChange(amountTobeReturn){
-    for(i=0;i<avaibleNote.length;i++){
+    for( let i=0; i< avaibleNote.length; i++){
         const noOfNotes=Math.trunc(amountTobeReturn/avaibleNote[i]);
-        amountTobeReturn%=avaibleNote[i];
+        amountTobeReturn %= avaibleNote[i];
         noOfNotes[i].innerText=noOfNotes;
 
     }
