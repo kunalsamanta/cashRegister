@@ -3,7 +3,7 @@ const cashGiven= document.querySelector("#cash-given");
 const checkButton= document.querySelector("#check-button");
 //console.log(cashGiven.value);
 const message=document.querySelector("#error-message");
-const noOfNotes=document.querySelector(".no-of-notes")
+const noOfNotes=document.querySelectorAll(".no-of-notes")
 const avaibleNote=[2000,500,200,100,20,10,1]
 
 checkButton.addEventListener("click",function validBillamount(){
