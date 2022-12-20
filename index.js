@@ -1,47 +1,52 @@
-const billAmount= document.querySelector("#bill-amount");
-const cashGiven= document.querySelector("#cash-given");
-const checkButton= document.querySelector("#check-button");
-//console.log(cashGiven.value);
-const message=document.querySelector("#error-message");
-const noOfNotes=document.querySelectorAll(".no-of-notes")
-const avaibleNote=[2000,500,200,100,20,10,1]
+const billAmount = document.getElementById("billAmt");
+const cashGiven = document.getElementById("cash");
+const amtWarning = document.getElementById("billAmtWarn");
+const cashWarning = document.getElementById("cashWarn");
+const getChangeBtn = document.getElementById("getChangeBtn");
+const noteCount = document.querySelectorAll(".count");
 
-checkButton.addEventListener("click",function validBillamount(){
-    hideMessage();
-   //console.log(billAmount.value);
-    if (billAmount.value>0){
-        if(cashGiven.value>=billAmount.value){
-            const amountTobeReturn= cashGiven.value-billAmount.value;
-            calculateChange(amountTobeReturn);
+// Input Value
+let avaliableNotes = [2000, 500, 100, 20, 10, 5, 1];
 
+//Event Listner
+billAmount.addEventListener("keyup", getAmount);
+cashGiven.addEventListener("keyup", getCash);
+getChangeBtn.addEventListener("click", getChangeFn);
 
-        }
-        else{
-            showMessage("Wanna wash some dish?");
-
-        }
-
-    }
-    else{
-        showMessage("invalid bill amount");
-    }
-});
-function hideMessage(){
-    message.style.display= "none";
-
+for (i = 1; i <= 7; i++) {
+  let hex = Math.floor(Math.random() * 16777215).toString(16);
+  document.getElementById("c" + i).style.color = "#" + hex;
+  document.getElementById("inner-c" + i).style.borderColor = "#" + hex;
 }
-function calculateChange(amountTobeReturn){
-    for( let i=0; i< avaibleNote.length; i++){
-        const noOfNotes=Math.trunc(amountTobeReturn/avaibleNote[i]);
-        amountTobeReturn %= avaibleNote[i];
-        noOfNotes[i].innerText=noOfNotes;
 
-    }
-
-
-
+// Functions
+function getAmount(event) {
+  if (event.target.value <= 0) {
+    amtWarning.style.visibility = "visible";
+    cashGiven.style.visibility = "hidden";
+  } else {
+    amtWarning.style.visibility = "hidden";
+    cashGiven.style.visibility = "visible";
+  }
 }
-function showMessage(msg){
-    message.style.display="block";
-    message.innerText=msg;
+
+function getCash(event) {
+  if (event.target.value < billAmount.value) {
+    cashWarning.style.visibility = "visible";
+  } else {
+    cashWarning.style.visibility = "hidden";
+  }
+}
+function getChangeFn(event) {
+  event.preventDefault();
+  let cashToReturn = cashGiven.value - billAmount.value;
+  if (cashToReturn >= 0) {
+    for (let i = 0; i < avaliableNotes.length; i++) {
+      const numberOfNotes = Math.trunc(cashToReturn / avaliableNotes[i]);
+      cashToReturn %= avaliableNotes[i];
+      noteCount[i].innerText = numberOfNotes;
+    }
+  } else {
+    cashWarning.style.visibility = "visible";
+  }
 }
